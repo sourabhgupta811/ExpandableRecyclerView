@@ -8,4 +8,4 @@ How to use:
         android:layout_height="wrap_content"
         app:expandDuration="500">
         //add your after expand design here
-        </com.example.smoothcardanimation.ExpandableLinearLayout>
+        </com.example.smoothcardanimation.ExpandableLinearLayout>        
