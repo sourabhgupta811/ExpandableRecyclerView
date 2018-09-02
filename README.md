@@ -1,6 +1,7 @@
 # ExpandableRecyclerView
 How to use:
   RecyclerViewItem.xml
+  
       <com.example.smoothcardanimation.ExpandableLinearLayout
         android:id="@+id/expandableView"
         android:layout_width="match_parent"
