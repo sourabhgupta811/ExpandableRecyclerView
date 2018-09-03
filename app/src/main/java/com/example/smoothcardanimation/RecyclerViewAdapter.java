@@ -65,11 +65,31 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         ExpandableLinearLayout expandableView;
         TextView headTextView;
         TextView expandedTextView;
+        ExpandListener expandListener = new ExpandListener() {
+            @Override
+            public void onExpandComplete() {
+                if(lastExpandedCardPosition!=getAdapterPosition() && recyclerView.findViewHolderForAdapterPosition(lastExpandedCardPosition)!=null){
+                    ((ExpandableLinearLayout)recyclerView.findViewHolderForAdapterPosition(lastExpandedCardPosition).itemView.findViewById(R.id.expandableView)).setExpanded(false);
+                    data.get(lastExpandedCardPosition).setExpanded(false);
+                    ((ExpandableLinearLayout)recyclerView.findViewHolderForAdapterPosition(lastExpandedCardPosition).itemView.findViewById(R.id.expandableView)).toggle();
+                }
+                else if(lastExpandedCardPosition!=getAdapterPosition() && recyclerView.findViewHolderForAdapterPosition(lastExpandedCardPosition)==null){
+                    data.get(lastExpandedCardPosition).setExpanded(false);
+                }
+                lastExpandedCardPosition = getAdapterPosition();
+            }
+
+            @Override
+            public void onCollapseComplete() {
+
+            }
+        };
         ViewHolder(View itemView) {
             super(itemView);
             headTextView = itemView.findViewById(R.id.head_textview);
             expandedTextView = itemView.findViewById(R.id.expanded_textview);
             expandableView = itemView.findViewById(R.id.expandableView);
+            expandableView.setExpandListener(expandListener);
             initializeClicks();
         }
 
@@ -85,15 +105,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                         expandableView.setExpanded(true);
                         data.get(getAdapterPosition()).setExpanded(true);
                         expandableView.toggle();
-                        if(lastExpandedCardPosition!=getAdapterPosition() && recyclerView.findViewHolderForAdapterPosition(lastExpandedCardPosition)!=null){
-                            ((ExpandableLinearLayout)recyclerView.findViewHolderForAdapterPosition(lastExpandedCardPosition).itemView.findViewById(R.id.expandableView)).setExpanded(false);
-                            data.get(lastExpandedCardPosition).setExpanded(false);
-                            ((ExpandableLinearLayout)recyclerView.findViewHolderForAdapterPosition(lastExpandedCardPosition).itemView.findViewById(R.id.expandableView)).toggle();
-                        }
-                        else if(lastExpandedCardPosition!=getAdapterPosition() && recyclerView.findViewHolderForAdapterPosition(lastExpandedCardPosition)==null){
-                            data.get(lastExpandedCardPosition).setExpanded(false);
-                        }
-                        lastExpandedCardPosition = getAdapterPosition();
                     }
                 }
             });

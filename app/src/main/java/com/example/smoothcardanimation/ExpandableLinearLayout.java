@@ -19,9 +19,10 @@ import android.widget.LinearLayout;
 /**
  * LinearLayout that can expand and collapse
  */
-public class ExpandableLinearLayout extends LinearLayout {
+public class ExpandableLinearLayout extends LinearLayout{
     private boolean expanded;
     private int duration;
+    private ExpandListener expandListener;
 
     public ExpandableLinearLayout(Context context) {
         super(context);
@@ -85,6 +86,22 @@ public class ExpandableLinearLayout extends LinearLayout {
                 return true;
             }
         };
+        a.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                expandListener.onExpandComplete();
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
         if (duration == -1)
             a.setDuration((int) (targetHeight / view.getContext().getResources().getDisplayMetrics().density * 1.5));
         else
@@ -115,6 +132,26 @@ public class ExpandableLinearLayout extends LinearLayout {
             a.setDuration((int) (initialHeight / view.getContext().getResources().getDisplayMetrics().density * 1.5));
         else
             a.setDuration(duration);
+        a.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                expandListener.onCollapseComplete();
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
         view.startAnimation(a);
+    }
+
+    public void setExpandListener(ExpandListener expandListener) {
+        this.expandListener = expandListener;
     }
 }
