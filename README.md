@@ -1,6 +1,6 @@
 # ExpandableRecyclerView
 <b>Deprecated</b><br>
-Please use new and better <a href="https://github.com/sourabhgupta811/ExpandableLayout">ExpandableLayout</a><br>
+Please use <a href="https://github.com/sourabhgupta811/ExpandableLayout">ExpandableLayout</a><br>
 
 How to use:
   
